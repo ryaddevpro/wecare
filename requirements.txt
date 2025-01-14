@@ -1,0 +1,6 @@
+Flask
+sentence-transformers
+numpy
+git+https://github.com/LucknowAI/Lucknow-LLM
+datasets
+google-generativeai
