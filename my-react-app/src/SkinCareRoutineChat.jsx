@@ -22,14 +22,14 @@ const SkinCareRoutineChat = () => {
     try {
       // Prepare the payload for the backend
       const payload = {
-        queries: [query], // Backend expects a `queries` array
+        queries: [query], // Backend expects a queries array
       };
 
       // Send POST request to the Flask backend
       const res = await axios.post("http://127.0.0.1:5000/query", payload);
 
       // Append the bot response to the history
-      const botResponse = res.data.responses[0]; // Backend returns `responses` array
+      const botResponse = res.data.responses[0]; // Backend returns responses array
       setMessages((prevMessages) => [
         ...prevMessages,
         { sender: "bot", text: botResponse },
@@ -44,20 +44,45 @@ const SkinCareRoutineChat = () => {
   return (
     <div
       style={{
-        maxWidth: "600px",
-        margin: "0 auto",
-        padding: "20px",
-        fontFamily: "Arial, sans-serif",
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#121212",
+        color: "#E0E0E0",
+        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        overflow: "hidden", // Prevent scrolling
       }}
     >
-      <h1>ChatBot</h1>
+      <header
+        style={{
+          width: "100%",
+          padding: "0 0",
+          textAlign: "center",
+          backgroundColor: "#1E1E1E",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        <h1 style={{ margin: 0, color: "#8BE8A3", fontWeight: "bold" }}>
+          WeCare
+        </h1>
+        <p style={{ margin: "5px 0 0", color: "#A0A0A0" }}>
+          Your personal skincare assistant
+        </p>
+      </header>
       <div
         style={{
-          height: "300px",
-          overflowY: "scroll",
-          border: "1px solid #ddd",
-          padding: "10px",
-          marginBottom: "20px",
+          flex: 1,
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "10px",
+          padding: "20px",
+          backgroundColor: "#181818",
         }}
       >
         {/* Render the message history */}
@@ -65,52 +90,87 @@ const SkinCareRoutineChat = () => {
           <div
             key={index}
             style={{
-              textAlign: msg.sender === "user" ? "right" : "left",
-              marginBottom: "10px",
+              width: "90%",
+              display: "flex",
+              justifyContent: msg.sender === "user" ? "flex-end" : "flex-start",
             }}
           >
-            <strong>{msg.sender === "user" ? "You" : "Bot"}:</strong>
-            <Markdown remarkPlugins={[remarkGfm]}>{msg.text}</Markdown>
+            <div
+              style={{
+                maxWidth: "70%",
+                padding: "12px 16px",
+                borderRadius: "12px",
+                backgroundColor: msg.sender === "user" ? "#8BE8A3" : "#333333",
+                color: msg.sender === "user" ? "#1E1E1E" : "#E0E0E0",
+                fontSize: "15px",
+                lineHeight: "1.6",
+              }}
+            >
+              <strong>{msg.sender === "user" ? "You" : "WeCare"}:</strong>{" "}
+              <Markdown remarkPlugins={[remarkGfm]}>{msg.text}</Markdown>
+            </div>
           </div>
         ))}
       </div>
-      <form onSubmit={handleSubmit}>
-        <textarea
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          width: "100%",
+          display: "flex",
+          padding: "20px",
+          backgroundColor: "#1E1E1E",
+          borderTop: "1px solid #333333",
+        }}
+      >
+        <input
+          type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Type your query here..."
-          rows="4"
+          rows="2"
           style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "10px",
-            fontSize: "16px",
+            flex: 1,
+            padding: "12px 16px",
+            borderRadius: "8px",
+            border: "1px solid #333333",
+            backgroundColor: "#242424",
+            color: "#E0E0E0",
+            fontSize: "15px",
+            marginRight: "10px",
+            resize: "none",
           }}
           required
         />
         <button
           type="submit"
           style={{
-            padding: "10px 20px",
-            backgroundColor: "#007BFF",
-            color: "white",
+            padding: "12px 20px",
+            backgroundColor: "#8BE8A3",
+            color: "#1E1E1E",
             border: "none",
-            borderRadius: "4px",
+            borderRadius: "8px",
             cursor: "pointer",
-            fontSize: "16px",
+            fontSize: "15px",
+            fontWeight: "bold",
           }}
           disabled={loading}
         >
-          {loading ? "Loading..." : "Submit"}
+          {loading ? "Loading..." : "Send"}
         </button>
       </form>
-      <div style={{ marginTop: "20px", fontSize: "16px" }}>
-        {error && (
-          <div style={{ color: "red" }}>
-            <strong>Error:</strong> {error}
-          </div>
-        )}
-      </div>
+      {error && (
+        <div
+          style={{
+            padding: "10px",
+            textAlign: "center",
+            color: "red",
+            backgroundColor: "#2A2A2A",
+            borderTop: "1px solid #333333",
+          }}
+        >
+          <strong>Error:</strong> {error}
+        </div>
+      )}
     </div>
   );
 };

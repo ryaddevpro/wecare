@@ -13,12 +13,12 @@ CORS(app)  # Enable CORS for all routes
 
 # Configuration for the RAG System
 MODEL_NAME = 'paraphrase-MiniLM-L6-v2'
-API_KEY = ""
+API_KEY = "AIzaSyAaYz8BkhIrEYILlswTGDJQPBEWXCuKrTI"
 GEMINI_MODEL_NAME = "gemini-1.0-pro"
 TOP_N = 3
 
 # MongoDB configuration
-MONGO_URI = "mongodb://127.0.0.1:27017/"
+MONGO_URI = "mongodb+srv://learning:learning@cluster0.ldnz1.mongodb.net/"
 DATABASE_NAME = "project_db"
 COLLECTION_NAME = "documents"
 
